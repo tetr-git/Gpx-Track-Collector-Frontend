@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Polyline, ZoomControl } from "react-leaflet";
 import L from "leaflet";
-import { fetchTracks } from "../../services/Tracks";
+import { fetchTracks } from "../../services/FetchAllTracks";
 import { handleTrackClick } from "../../handlers/HandleTrackClick";
 import { resetMapView } from "../../handlers/ResetMapView";
 import TrackDetails from "../track-details-panel/TrackDetailsPanel";

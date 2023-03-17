@@ -5,7 +5,7 @@ export const colorTracks = (selectedTrack, tracks) => {
         ...track,
         pathOptions: {
           color: "blue",
-          weight: 5,
+          weight: 3,
         },
       };
     } else {
