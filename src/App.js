@@ -1,7 +1,7 @@
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 import React from "react";
-import TrackMap from "./components/Trackmap/Trackmap";
+import Map from "./components/map/Map";
 
 <script
   src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
@@ -200,7 +200,7 @@ export default App;
 function App() {
   return (
     <div className="App">
-      <TrackMap />
+      <Map />
     </div>
   );
 }

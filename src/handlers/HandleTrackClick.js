@@ -1,5 +1,5 @@
 import L from "leaflet";
-import { colorTracks } from "../utils/colorTracks";
+import { colorTracks } from "../utils/ColorTracks";
 
 export const handleTrackClick = (selectedTrack, mapRef, setTracks, tracks) => {
   const bounds = L.latLngBounds(

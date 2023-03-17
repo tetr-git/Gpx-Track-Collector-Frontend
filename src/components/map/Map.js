@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import { MapContainer, TileLayer, Polyline, ZoomControl } from "react-leaflet";
 import L from "leaflet";
-import { fetchTracks } from "../../services/tracks";
-import { handleTrackClick } from "../../handlers/handleTrackClick";
-import { resetMapView } from "../../handlers/resetMapView";
-import TrackDetails from "../TrackDetails";
-import "./TrackMap.css";
+import { fetchTracks } from "../../services/Tracks";
+import { handleTrackClick } from "../../handlers/HandleTrackClick";
+import { resetMapView } from "../../handlers/ResetMapView";
+import TrackDetails from "../track-details-panel/TrackDetailsPanel";
+import "./Map.css";
 
-function TrackMap() {
+function Map() {
   const [tracks, setTracks] = useState([]);
   const mapRef = useRef();
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  const onTrackClick = (track, index) => {
+  const onTrackClick = (track) => {
     handleTrackClick(track, mapRef, setTracks, tracks);
     setSelectedTrack(track);
   };
@@ -88,10 +88,10 @@ function TrackMap() {
         )}
       </MapContainer>
       <button className="reset-view-btn" onClick={resetView}>
-        Reset View
+        Show all tracks
       </button>
     </div>
   );
 }
 
-export default TrackMap;
+export default Map;

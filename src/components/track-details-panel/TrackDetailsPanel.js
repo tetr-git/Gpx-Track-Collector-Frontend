@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./styles.css";
+import "./TrackDetailsPanel.css";
 import ReactLoading from "react-loading";
 
 const TrackDetails = ({
@@ -65,7 +65,7 @@ const TrackDetails = ({
   if (!track) {
     return (
       <div className="track-details">
-        <h4>All Tracks</h4>
+        <h4>GPXTrackCollector</h4>
         <p>Total distance {totalDistance} km</p>
         <p>Total time {totalTime} hours</p>
         <div>
@@ -116,7 +116,7 @@ const TrackDetails = ({
   return (
     <div className="track-details">
       <button className="track-details-btn" onClick={onResetView}>
-        Reset View
+        Back
       </button>
       <h4>{track.name}</h4>
       <p>
