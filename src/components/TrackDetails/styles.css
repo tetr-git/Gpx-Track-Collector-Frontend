@@ -1,0 +1,82 @@
+.track-details {
+  background-color: white;
+  border-right: 1px solid #ccc;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 250px;
+  z-index: 1000;
+}
+
+.track-details h4 {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.track-details-btn {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  z-index: 1000;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.track-item {
+  margin-bottom: 8px;
+}
+
+.track-item button {
+  display: flex;
+  flex-direction: column;
+  padding: 8px;
+  width: 100%;
+  background-color: white;
+  border: 1px solid #6aa84f;
+  border-radius: 3px;
+  cursor: pointer;
+  text-align: left;
+}
+
+.track-item button:hover {
+  background-color: #f5f5f5;
+}
+
+.track-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 4px;
+  width: 100%;
+}
+
+.track-info {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 0.9em;
+  color: #777;
+}
+
+.track-item-info {
+  display: inline-block;
+  margin-left: 8px;
+  font-size: 0.8em;
+  color: #777;
+  font-style: italic;
+  margin-top: 2px;
+}
+
+.loading-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
