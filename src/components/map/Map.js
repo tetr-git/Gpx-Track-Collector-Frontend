@@ -12,6 +12,7 @@ function Map() {
   const mapRef = useRef();
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [refresh, setRefresh] = useState(false);
 
   const onTrackClick = (track) => {
     handleTrackClick(track, mapRef, setTracks, tracks);
@@ -34,7 +35,7 @@ function Map() {
         mapRef.current.fitBounds(bounds);
       }
     });
-  }, []);
+  }, [refresh]);
 
   //to make the map fit the bounds of the polyline
   L.Path.CLIP_PADDING = 1.5;
@@ -47,6 +48,7 @@ function Map() {
         tracks={tracks}
         onTrackClick={onTrackClick}
         onResetView={resetView}
+        refreshTracks={() => setRefresh(!refresh)}
       />
       <MapContainer
         ref={mapRef}

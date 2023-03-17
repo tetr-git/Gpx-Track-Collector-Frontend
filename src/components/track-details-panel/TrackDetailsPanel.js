@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "./TrackDetailsPanel.css";
 import ReactLoading from "react-loading";
+import uploadFile from "../../services/fileUploadService";
+import Overlay from "../overlay/Overlay";
 
 const TrackDetails = ({
   isLoading,
@@ -8,9 +10,11 @@ const TrackDetails = ({
   tracks,
   onTrackClick,
   onResetView,
+  refreshTracks,
 }) => {
   const [filterTerm, setFilterTerm] = useState("");
   const [sortType, setSortType] = useState("name-asc");
+  const [overlay, setOverlay] = useState({ isVisible: false, message: "" });
 
   if (isLoading) {
     return (
@@ -104,6 +108,51 @@ const TrackDetails = ({
               </button>
             </div>
           ))}
+        </div>
+        <div>
+          <input
+            type="file"
+            id="file-input"
+            accept=".gpx"
+            onChange={(e) => {
+              if (e.target.files && e.target.files.length > 0) {
+                uploadFile(
+                  e.target.files[0],
+                  refreshTracks,
+                  (message) => setOverlay({ isVisible: true, message }),
+                  (errorMessage) =>
+                    setOverlay({ isVisible: true, message: errorMessage })
+                );
+              }
+            }}
+          />
+          <button
+            id="upload-button"
+            onClick={() => {
+              const fileInput = document.getElementById("file-input");
+              if (!fileInput.files || fileInput.files.length === 0) {
+                setOverlay({
+                  isVisible: true,
+                  message: "Please select a file to upload",
+                });
+                return;
+              }
+              uploadFile(
+                fileInput.files[0],
+                refreshTracks,
+                (message) => setOverlay({ isVisible: true, message }),
+                (errorMessage) =>
+                  setOverlay({ isVisible: true, message: errorMessage })
+              );
+            }}
+          >
+            Upload
+          </button>
+          <Overlay
+            isVisible={overlay.isVisible}
+            message={overlay.message}
+            onClose={() => setOverlay({ isVisible: false, message: "" })}
+          />
         </div>
       </div>
     );
