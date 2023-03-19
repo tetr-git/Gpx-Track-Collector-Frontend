@@ -13,6 +13,7 @@ export const resetMapView = (mapRef, tracks, setTracks) => {
       pathOptions: {
         color: "blue",
         weight: 3,
+        zIndex: 1000,
       },
     }))
   );

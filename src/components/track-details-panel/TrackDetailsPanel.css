@@ -74,9 +74,35 @@
   margin-top: 2px;
 }
 
-.loading-animation {
+.delete-track-btn {
+  background-color: #f44336;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition-duration: 0.4s;
+}
+
+.delete-track-btn:hover {
+  background-color: #da190b;
+  color: white;
+}
+
+.loading-container {
+  position: relative;
+  display: inline-block;
+}
+
+.loading-progress {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
 }

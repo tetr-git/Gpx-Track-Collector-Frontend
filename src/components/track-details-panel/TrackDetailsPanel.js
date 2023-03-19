@@ -3,9 +3,11 @@ import "./TrackDetailsPanel.css";
 import ReactLoading from "react-loading";
 import uploadFile from "../../services/fileUploadService";
 import Overlay from "../overlay/Overlay";
+import deleteTrack from "../../services/deleteTrackService";
 
 const TrackDetails = ({
   isLoading,
+  loadingProgress,
   track,
   tracks,
   onTrackClick,
@@ -19,13 +21,18 @@ const TrackDetails = ({
   if (isLoading) {
     return (
       <div className="track-details">
-        <ReactLoading
-          type={"spin"}
-          color={"#000"}
-          height={"20%"}
-          width={"20%"}
-          className="loading-animation"
-        />
+        <div className="loading-container">
+          <ReactLoading
+            type={"spin"}
+            color={"#000"}
+            height={"20%"}
+            width={"20%"}
+            className="loading-animation"
+          />
+          <div className="loading-progress">
+            <p>Loading tracks... {loadingProgress}%</p>
+          </div>
+        </div>
       </div>
     );
   }
@@ -65,6 +72,21 @@ const TrackDetails = ({
   };
 
   const { totalDistance, totalTime } = getTotalDistanceAndTime();
+
+  const handleDelete = () => {
+    deleteTrack(
+      track.fileName,
+      (message) => {
+        setOverlay({ isVisible: true, message });
+        onResetView();
+        refreshTracks();
+      },
+      (errorMessage) => {
+        console.error(errorMessage);
+        setOverlay({ isVisible: true, message: "Error deleting the file" });
+      }
+    );
+  };
 
   if (!track) {
     return (
@@ -183,6 +205,11 @@ const TrackDetails = ({
       <p>
         <strong>Total decline:</strong> {track.totalDecline.toFixed(2)} m
       </p>
+      {track && (
+        <button className="delete-track-btn" onClick={handleDelete}>
+          Delete Track
+        </button>
+      )}
     </div>
   );
 };

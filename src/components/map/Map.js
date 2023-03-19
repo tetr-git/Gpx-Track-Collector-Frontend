@@ -13,6 +13,7 @@ function Map() {
   const [selectedTrack, setSelectedTrack] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
+  const [loadingProgress, setLoadingProgress] = useState(0);
 
   const onTrackClick = (track) => {
     handleTrackClick(track, mapRef, setTracks, tracks);
@@ -25,7 +26,7 @@ function Map() {
   };
 
   useEffect(() => {
-    fetchTracks().then((allTracks) => {
+    const onSuccess = (allTracks) => {
       setTracks(allTracks);
       setIsLoading(false);
       if (mapRef.current) {
@@ -34,7 +35,14 @@ function Map() {
         );
         mapRef.current.fitBounds(bounds);
       }
-    });
+    };
+
+    const onError = (error) => {
+      console.error(error);
+      setIsLoading(false);
+    };
+
+    fetchTracks(onSuccess, onError, setLoadingProgress);
   }, [refresh]);
 
   //to make the map fit the bounds of the polyline
@@ -44,6 +52,7 @@ function Map() {
     <div className="map-container-wrapper">
       <TrackDetails
         isLoading={isLoading}
+        loadingProgress={loadingProgress}
         track={selectedTrack}
         tracks={tracks}
         onTrackClick={onTrackClick}
