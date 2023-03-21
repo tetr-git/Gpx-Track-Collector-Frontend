@@ -11,12 +11,15 @@ export const fetchTracks = async (onSuccess, onError, setLoadingProgress) => {
       axios.get(`http://localhost:3003/api/gpx/${index}`)
     );
 
-    const trackResponses = [];
-    for (let i = 0; i < trackPromises.length; i++) {
-      const response = await trackPromises[i];
-      trackResponses.push(response);
-      setLoadingProgress(Math.floor(((i + 1) / trackPromises.length) * 100));
-    }
+    let loadedTrackCount = 0;
+    const trackResponses = await Promise.all(
+      trackPromises.map(async (trackPromise, index) => {
+        const response = await trackPromise;
+        loadedTrackCount++;
+        setLoadingProgress(Math.floor((loadedTrackCount / trackCount) * 100));
+        return response;
+      })
+    );
 
     const tracks = trackResponses.map((response, index) => {
       const trackData = response.data.data[0];
