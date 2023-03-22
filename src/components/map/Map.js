@@ -29,10 +29,18 @@ function Map() {
     const onSuccess = (allTracks) => {
       setTracks(allTracks);
       setIsLoading(false);
-      if (mapRef.current) {
+
+      if (allTracks.length > 0 && mapRef.current) {
         const bounds = L.latLngBounds(
           allTracks.flatMap((track) => track.points.map((p) => [p.lat, p.lon]))
         );
+        mapRef.current.fitBounds(bounds);
+      } else {
+        // Set default bounds to show Germany if there are no tracks
+        const bounds = L.latLngBounds([
+          [47.28, 5.86],
+          [54.83, 14.31],
+        ]);
         mapRef.current.fitBounds(bounds);
       }
     };

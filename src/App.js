@@ -19,16 +19,26 @@ function App() {
     return storedUser ? JSON.parse(storedUser) : null;
   });
 
-  useEffect(() => {
+  const updateUserInLocalStorage = (user) => {
     if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
+      const storedUser = localStorage.getItem("user");
+      const updatedUser = {
+        ...user,
+        accessToken: storedUser && JSON.parse(storedUser).accessToken,
+      };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
     } else {
       localStorage.removeItem("user");
     }
+  };
+
+  useEffect(() => {
+    updateUserInLocalStorage(user);
   }, [user]);
 
   const handleLoginSuccess = (loggedInUser) => {
     setUser(loggedInUser);
+    updateUserInLocalStorage(loggedInUser);
   };
 
   return (

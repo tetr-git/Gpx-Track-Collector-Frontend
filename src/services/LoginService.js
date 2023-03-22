@@ -13,6 +13,17 @@ const login = async (email, password) => {
     { email, password },
     { withCredentials: true }
   );
+
+  const token = response.data.token;
+
+  if (token) {
+    const user = {
+      ...response.data.user,
+      accessToken: token,
+    };
+    localStorage.setItem("user", JSON.stringify(user));
+  }
+
   return response.data;
 };
 

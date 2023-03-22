@@ -1,14 +1,24 @@
 import axios from "axios";
 
+import { getToken } from "../utils/getToken";
+
 export const fetchTracks = async (onSuccess, onError, setLoadingProgress) => {
   try {
-    const allFilesResponse = await axios.get(
-      "http://localhost:3003/api/gpx/all"
-    );
+    const token = getToken();
+
+    console.log("token:", token);
+    const axiosInstance = axios.create({
+      baseURL: "http://localhost:3003/api/",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const allFilesResponse = await axiosInstance.get("gpx/all");
     const trackCount = allFilesResponse.data.count;
 
     const trackPromises = Array.from({ length: trackCount }, (_, index) =>
-      axios.get(`http://localhost:3003/api/gpx/${index}`)
+      axiosInstance.get(`gpx/${index}`)
     );
 
     let loadedTrackCount = 0;

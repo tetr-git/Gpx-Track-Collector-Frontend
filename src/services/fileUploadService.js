@@ -1,9 +1,16 @@
+import { getToken } from "../utils/getToken";
+
 const uploadFile = (file, onResetView, onResponseMessage) => {
   const formData = new FormData();
   formData.append("file", file);
 
+  const token = getToken();
+
   fetch("http://localhost:3003/api/upload", {
     method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
     body: formData,
   })
     .then((response) => {
