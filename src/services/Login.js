@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3003/api/";
+const API_URL = process.env.REACT_APP_GRC_BACKEND_URL;
 
 const register = async (email, password) => {
   const response = await axios.post(API_URL + "register", { email, password });

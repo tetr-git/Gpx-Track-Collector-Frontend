@@ -4,12 +4,15 @@ const deleteTrack = async (fileName, onSuccess, onError) => {
   try {
     const token = getToken();
 
-    const response = await fetch(`http://localhost:3003/api/gpx/${fileName}`, {
-      method: "DELETE",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_GRC_BACKEND_URL}gpx/${fileName}`,
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
 
     if (!response.ok) {
       const message = await response.text();

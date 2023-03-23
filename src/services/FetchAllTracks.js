@@ -7,7 +7,7 @@ export const fetchTracks = async (onSuccess, onError, setLoadingProgress) => {
     const token = getToken();
 
     const axiosInstance = axios.create({
-      baseURL: "http://localhost:3003/api/",
+      baseURL: process.env.REACT_APP_GRC_BACKEND_URL,
       headers: {
         Authorization: `Bearer ${token}`,
       },

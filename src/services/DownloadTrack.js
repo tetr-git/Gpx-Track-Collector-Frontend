@@ -7,7 +7,7 @@ const downloadTrack = async (fileName, onSuccess, onError) => {
     const token = getToken();
 
     const response = await axios.get(
-      `http://localhost:3003/api/gpx/download/${fileName}`,
+      `${process.env.REACT_APP_GRC_BACKEND_URL}gpx/download/${fileName}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,

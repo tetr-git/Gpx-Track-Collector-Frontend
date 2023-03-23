@@ -6,7 +6,7 @@ const uploadFile = (file, onResetView, onResponseMessage) => {
 
   const token = getToken();
 
-  fetch("http://localhost:3003/api/upload", {
+  fetch(`${process.env.REACT_APP_GRC_BACKEND_URL}upload`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
