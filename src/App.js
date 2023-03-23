@@ -1,17 +1,10 @@
 import React, { useState, useEffect } from "react";
 import Map from "./components/map/Map";
 import LoginPage from "./components/loginpage/LoginPage";
-import "./App.css";
+import "leaflet";
+import "leaflet-gpx";
 import "leaflet/dist/leaflet.css";
-
-<script
-  src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
-  integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM="
-  crossorigin=""
-  List
-></script>;
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>;
+import "./App.css";
 
 function App() {
   const [user, setUser] = useState(() => {

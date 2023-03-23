@@ -20,25 +20,6 @@ const TrackDetails = ({
   const [overlay, setOverlay] = useState({ isVisible: false, message: "" });
   const fileInputRef = useRef();
 
-  if (isLoading) {
-    return (
-      <div className="track-details">
-        <div className="loading-container">
-          <ReactLoading
-            type={"spin"}
-            color={"#000"}
-            height={"20%"}
-            width={"20%"}
-            className="loading-animation"
-          />
-          <div className="loading-progress">
-            <p>Loading tracks... {loadingProgress}%</p>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
   const filterAndSortTracks = () => {
     return tracks
       .filter((t) => t.name.toLowerCase().includes(filterTerm.toLowerCase()))
@@ -63,6 +44,24 @@ const TrackDetails = ({
   };
 
   const sortedAndFilteredTracks = filterAndSortTracks();
+  if (isLoading) {
+    return (
+      <div className="track-details">
+        <div className="loading-container">
+          <ReactLoading
+            type={"spin"}
+            color={"#000"}
+            height={"20%"}
+            width={"20%"}
+            className="loading-animation"
+          />
+          <div className="loading-progress">
+            <p>Loading tracks... {loadingProgress}%</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   const getTotalDistanceAndTime = () => {
     const totalDistance = tracks.reduce((sum, t) => sum + t.totalLength, 0);
@@ -74,6 +73,10 @@ const TrackDetails = ({
   };
 
   const { totalDistance, totalTime } = getTotalDistanceAndTime();
+
+  const totalLengthInKm = track.totalLength / 1000;
+  const totalTimeInHours = (track.totalTime / 3600).toFixed(2);
+  const avgSpeed = track.avgSpeed.toFixed(2);
 
   const handleDelete = () => {
     deleteTrack(
@@ -89,6 +92,38 @@ const TrackDetails = ({
       }
     );
   };
+
+  const handleDownload = () => {
+    downloadTrack(
+      track.fileName,
+      (message) => {
+        setOverlay({ isVisible: true, message });
+      },
+      (errorMessage) => {
+        console.error(errorMessage);
+        setOverlay({ isVisible: true, message: "Error downloading the file" });
+      }
+    );
+  };
+
+  if (isLoading) {
+    return (
+      <div className="track-details">
+        <div className="loading-container">
+          <ReactLoading
+            type={"spin"}
+            color={"#000"}
+            height={"20%"}
+            width={"20%"}
+            className="loading-animation"
+          />
+          <div className="loading-progress">
+            <p>Loading tracks... {loadingProgress}%</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (!track) {
     return (
@@ -166,23 +201,6 @@ const TrackDetails = ({
       </div>
     );
   }
-
-  const totalLengthInKm = track.totalLength / 1000;
-  const totalTimeInHours = (track.totalTime / 3600).toFixed(2);
-  const avgSpeed = track.avgSpeed.toFixed(2);
-
-  const handleDownload = () => {
-    downloadTrack(
-      track.fileName,
-      (message) => {
-        setOverlay({ isVisible: true, message });
-      },
-      (errorMessage) => {
-        console.error(errorMessage);
-        setOverlay({ isVisible: true, message: "Error downloading the file" });
-      }
-    );
-  };
 
   return (
     <div className="track-details">

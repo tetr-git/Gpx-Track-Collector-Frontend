@@ -12,8 +12,8 @@ export const colorTracks = (selectedTrack, tracks) => {
       return {
         ...track,
         pathOptions: {
-          color: "grey",
-          weight: 2,
+          color: "#8a2be2",
+          weight: 1.8,
         },
       };
     }
