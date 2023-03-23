@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import LoginService from "../../services/LoginService";
+import LoginService from "../../services/Login";
 import "./LoginPage.css";
 
 const LoginPage = ({ onLoginSuccess }) => {

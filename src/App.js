@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Map from "./components/map/Map";
-import LoginPage from "./components/LoginPage/LoginPage";
+import LoginPage from "./components/loginpage/LoginPage";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 

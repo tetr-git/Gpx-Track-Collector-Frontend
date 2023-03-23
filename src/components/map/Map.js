@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { MapContainer, TileLayer, Polyline, ZoomControl } from "react-leaflet";
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import L from "leaflet";
 import { fetchTracks } from "../../services/FetchAllTracks";
 import { handleTrackClick } from "../../handlers/HandleTrackClick";
-import { resetMapView } from "../../handlers/ResetMapView";
-import TrackDetails from "../track-details-panel/TrackDetailsPanel";
+import { resetMapView } from "../../handlers/HandleResetMapView";
+import TrackDetails from "../trackdetailspanel/DetailsPanel";
+import PolylineDecorator from "../polylineDecorator/PolylineDecorator";
 import "./Map.css";
 
 function Map() {
@@ -87,10 +88,16 @@ function Map() {
         <ZoomControl position="topleft" />
         {tracks.map((track) =>
           track.points.length > 0 ? (
-            <Polyline
+            <PolylineDecorator
               key={track.fileName}
-              pathOptions={track.pathOptions}
               positions={track.points.map((p) => [p.lat, p.lon])}
+              pathOptions={track.pathOptions}
+              arrowheads={{
+                frequency: "50px",
+                size: "12px",
+                type: "arrow",
+                fill: true,
+              }}
               eventHandlers={{
                 click: () => {
                   handleTrackClick(track, mapRef, setTracks, tracks);

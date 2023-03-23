@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
-import "./TrackDetailsPanel.css";
+import "./DetailsPanel.css";
 import ReactLoading from "react-loading";
-import uploadFile from "../../services/fileUploadService";
+import uploadFile from "../../services/FileUpload";
 import Overlay from "../overlay/Overlay";
-import deleteTrack from "../../services/deleteTrackService";
-import downloadTrack from "../../services/downloadTrack";
+import deleteTrack from "../../services/DeleteTrack";
+import downloadTrack from "../../services/DownloadTrack";
 
 const TrackDetails = ({
   isLoading,

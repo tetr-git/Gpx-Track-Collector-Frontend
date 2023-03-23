@@ -1,4 +1,4 @@
-import { getToken } from "../utils/getToken";
+import { getToken } from "../utils/GetToken";
 
 const deleteTrack = async (fileName, onSuccess, onError) => {
   try {

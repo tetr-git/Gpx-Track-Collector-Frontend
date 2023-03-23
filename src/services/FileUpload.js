@@ -1,4 +1,4 @@
-import { getToken } from "../utils/getToken";
+import { getToken } from "../utils/GetToken";
 
 const uploadFile = (file, onResetView, onResponseMessage) => {
   const formData = new FormData();

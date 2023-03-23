@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { getToken } from "../utils/getToken";
+import { getToken } from "../utils/GetToken";
 
 export const fetchTracks = async (onSuccess, onError, setLoadingProgress) => {
   try {
