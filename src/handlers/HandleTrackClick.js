@@ -6,7 +6,7 @@ export const handleTrackClick = (selectedTrack, mapRef, setTracks, tracks) => {
     selectedTrack.points.map((p) => [p.lat, p.lon])
   );
   if (mapRef.current) {
-    mapRef.current.fitBounds(bounds, { padding: [50, 50] });
+    mapRef.current.fitBounds(bounds, { padding: [10, 10] });
   }
   setTracks(colorTracks(selectedTrack, tracks));
 };

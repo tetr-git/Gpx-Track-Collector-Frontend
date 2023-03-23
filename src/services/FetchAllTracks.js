@@ -6,7 +6,6 @@ export const fetchTracks = async (onSuccess, onError, setLoadingProgress) => {
   try {
     const token = getToken();
 
-    console.log("token:", token);
     const axiosInstance = axios.create({
       baseURL: "http://localhost:3003/api/",
       headers: {
@@ -60,6 +59,10 @@ export const fetchTracks = async (onSuccess, onError, setLoadingProgress) => {
     onSuccess(tracks);
   } catch (error) {
     console.error(error);
-    onError("Error fetching tracks");
+    if (error.message === "Network Error" || error.response?.status >= 500) {
+      onError("Server not reachable");
+    } else {
+      onError("Error fetching tracks");
+    }
   }
 };

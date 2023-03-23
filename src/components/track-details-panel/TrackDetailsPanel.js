@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import "./TrackDetailsPanel.css";
 import ReactLoading from "react-loading";
 import uploadFile from "../../services/fileUploadService";
 import Overlay from "../overlay/Overlay";
 import deleteTrack from "../../services/deleteTrackService";
+import downloadTrack from "../../services/downloadTrack";
 
 const TrackDetails = ({
   isLoading,
@@ -17,6 +18,7 @@ const TrackDetails = ({
   const [filterTerm, setFilterTerm] = useState("");
   const [sortType, setSortType] = useState("name-asc");
   const [overlay, setOverlay] = useState({ isVisible: false, message: "" });
+  const fileInputRef = useRef();
 
   if (isLoading) {
     return (
@@ -132,44 +134,29 @@ const TrackDetails = ({
           ))}
         </div>
         <div>
-          <input
-            type="file"
-            id="file-input"
-            accept=".gpx"
-            onChange={(e) => {
-              if (e.target.files && e.target.files.length > 0) {
-                uploadFile(
-                  e.target.files[0],
-                  refreshTracks,
-                  (message) => setOverlay({ isVisible: true, message }),
-                  (errorMessage) =>
-                    setOverlay({ isVisible: true, message: errorMessage })
-                );
-              }
-            }}
-          />
-          <button
-            id="upload-button"
-            onClick={() => {
-              const fileInput = document.getElementById("file-input");
-              if (!fileInput.files || fileInput.files.length === 0) {
-                setOverlay({
-                  isVisible: true,
-                  message: "Please select a file to upload",
-                });
-                return;
-              }
-              uploadFile(
-                fileInput.files[0],
-                refreshTracks,
-                (message) => setOverlay({ isVisible: true, message }),
-                (errorMessage) =>
-                  setOverlay({ isVisible: true, message: errorMessage })
-              );
-            }}
-          >
-            Upload
-          </button>
+          <label>
+            <input
+              type="file"
+              id="file-input"
+              accept=".gpx"
+              className="hidden-input"
+              ref={fileInputRef}
+              onChange={(e) => {
+                if (e.target.files && e.target.files.length > 0) {
+                  uploadFile(
+                    e.target.files[0],
+                    refreshTracks,
+                    (message) => setOverlay({ isVisible: true, message }),
+                    (errorMessage) =>
+                      setOverlay({ isVisible: true, message: errorMessage })
+                  );
+                }
+              }}
+            />
+            <button type="button" onClick={() => fileInputRef.current.click()}>
+              Upload
+            </button>{" "}
+          </label>
           <Overlay
             isVisible={overlay.isVisible}
             message={overlay.message}
@@ -183,6 +170,19 @@ const TrackDetails = ({
   const totalLengthInKm = track.totalLength / 1000;
   const totalTimeInHours = (track.totalTime / 3600).toFixed(2);
   const avgSpeed = track.avgSpeed.toFixed(2);
+
+  const handleDownload = () => {
+    downloadTrack(
+      track.fileName,
+      (message) => {
+        setOverlay({ isVisible: true, message });
+      },
+      (errorMessage) => {
+        console.error(errorMessage);
+        setOverlay({ isVisible: true, message: "Error downloading the file" });
+      }
+    );
+  };
 
   return (
     <div className="track-details">
@@ -206,9 +206,14 @@ const TrackDetails = ({
         <strong>Total decline:</strong> {track.totalDecline.toFixed(2)} m
       </p>
       {track && (
-        <button className="delete-track-btn" onClick={handleDelete}>
-          Delete Track
-        </button>
+        <div className="track-actions">
+          <button className="download-track-btn" onClick={handleDownload}>
+            Download Track
+          </button>
+          <button className="delete-track-btn" onClick={handleDelete}>
+            Delete Track
+          </button>
+        </div>
       )}
     </div>
   );

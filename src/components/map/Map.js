@@ -14,6 +14,7 @@ function Map() {
   const [isLoading, setIsLoading] = useState(true);
   const [refresh, setRefresh] = useState(false);
   const [loadingProgress, setLoadingProgress] = useState(0);
+  const [serverError, setServerError] = useState(false);
 
   const onTrackClick = (track) => {
     handleTrackClick(track, mapRef, setTracks, tracks);
@@ -48,6 +49,7 @@ function Map() {
     const onError = (error) => {
       console.error(error);
       setIsLoading(false);
+      setServerError(true);
     };
 
     fetchTracks(onSuccess, onError, setLoadingProgress);
@@ -58,6 +60,9 @@ function Map() {
 
   return (
     <div className="map-container-wrapper">
+      {serverError && (
+        <div className="server-error-overlay">Server not reachable</div>
+      )}
       <TrackDetails
         isLoading={isLoading}
         loadingProgress={loadingProgress}

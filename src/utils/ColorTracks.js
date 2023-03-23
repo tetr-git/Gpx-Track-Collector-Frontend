@@ -6,7 +6,6 @@ export const colorTracks = (selectedTrack, tracks) => {
         pathOptions: {
           color: "blue",
           weight: 3,
-          zIndex: 1000,
         },
       };
     } else {
@@ -14,8 +13,7 @@ export const colorTracks = (selectedTrack, tracks) => {
         ...track,
         pathOptions: {
           color: "grey",
-          weight: 3,
-          zIndex: 1,
+          weight: 2,
         },
       };
     }
