@@ -6,7 +6,7 @@ const uploadFile = (file, onResetView, onResponseMessage) => {
 
   const token = getToken();
 
-  fetch(`${process.env.REACT_APP_GRC_BACKEND_URL}upload`, {
+  fetch(`${process.env.REACT_APP_GRC_BACKEND_URL}gpx/upload`, {
     method: "POST",
     headers: {
       Authorization: `Bearer ${token}`,
